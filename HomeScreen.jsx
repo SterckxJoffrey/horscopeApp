@@ -11,6 +11,26 @@ import {
 import data from "./data.json";
 import { generateText } from "./Horoscope";
 
+const formatBirthDate = (text) => {
+  const digits = text.replace(/\D/g, "").slice(0, 8);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 4) return `${digits.slice(0, 2)}-${digits.slice(2)}`;
+  return `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4)}`;
+};
+
+const isValidBirthDate = (str) => {
+  if (!/^\d{2}-\d{2}-\d{4}$/.test(str)) return false;
+  const [d, m, y] = str.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  return (
+    date.getFullYear() === y &&
+    date.getMonth() === m - 1 &&
+    date.getDate() === d &&
+    y >= 1900 &&
+    date <= new Date()
+  );
+};
+
 // 🔹 Questions
 const questions = {
   amour: {
@@ -51,7 +71,7 @@ const questions = {
   },
 };
 
-export default function HomeScreen() {
+export default function HomeScreen({ onSubmit }) {
   const [answers, setAnswers] = useState({
     amour: null,
     travail: null,
@@ -60,18 +80,20 @@ export default function HomeScreen() {
   });
 
   const [birthDate, setBirthDate] = useState("");
-  const [result, setResult] = useState("");
 
   const handleSelect = (question, value) => {
     setAnswers((prev) => ({ ...prev, [question]: value }));
   };
 
+  const dateValid = isValidBirthDate(birthDate);
+  const dateError = birthDate.length === 10 && !dateValid;
+
   const isComplete =
-    Object.values(answers).every((v) => v !== null) && birthDate.length > 0;
+    Object.values(answers).every((v) => v !== null) && dateValid;
 
   const handleSubmit = () => {
     const text = generateText(data, answers);
-    setResult(text);
+    onSubmit({ text, birthDate });
   };
 
   return (
@@ -79,13 +101,19 @@ export default function HomeScreen() {
       <Text style={styles.title}>✨ Ton Horoscope Personnalisé</Text>
 
       {/* Date de naissance */}
-      <Text style={styles.label}>Date de naissance</Text>
+      <Text style={styles.label}>Date de naissance (JJ-MM-AAAA)</Text>
       <TextInput
-        placeholder="YYYY-MM-DD"
+        placeholder="15-03-1990"
+        placeholderTextColor="#64748b"
         value={birthDate}
-        onChangeText={setBirthDate}
-        style={styles.input}
+        onChangeText={(t) => setBirthDate(formatBirthDate(t))}
+        keyboardType="number-pad"
+        maxLength={10}
+        style={[styles.input, dateError && styles.inputError]}
       />
+      {dateError && (
+        <Text style={styles.errorText}>Date invalide. Format : JJ-MM-AAAA.</Text>
+      )}
 
       {/* Questions */}
       {Object.entries(questions).map(([key, q]) => (
@@ -121,9 +149,6 @@ export default function HomeScreen() {
       >
         <Text style={styles.buttonText}>Voir mon horoscope</Text>
       </TouchableOpacity>
-
-      {/* Résultat */}
-      {result ? <Text style={styles.result}>{result}</Text> : null}
     </ScrollView>
   );
 }
@@ -151,6 +176,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "transparent",
+  },
+  inputError: {
+    borderColor: "#ef4444",
+    marginBottom: 6,
+  },
+  errorText: {
+    color: "#ef4444",
+    fontSize: 13,
+    marginBottom: 16,
   },
   block: {
     marginBottom: 25,
@@ -189,11 +225,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-  },
-  result: {
-    marginTop: 20,
-    color: "#e2e8f0",
-    lineHeight: 22,
   },
 });
 
