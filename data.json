@@ -1,0 +1,64 @@
+{
+  "variants": [
+    {
+      "intro": [
+        "En ce moment, une énergie particulière t'entoure.",
+        "Tu entres dans une phase intéressante de ta vie.",
+        "Une dynamique nouvelle semble émerger pour toi."
+      ],
+      "tones": {
+        "confiant": [
+          "Tu avances avec assurance.",
+          "Une certaine confiance te guide.",
+          "Tu sembles aligné avec tes choix."
+        ],
+        "anxieux": [
+          "Des doutes peuvent apparaître.",
+          "Une certaine tension intérieure se fait sentir.",
+          "Tu ressens peut-être une forme d’inquiétude."
+        ]
+      },
+      "love": {
+        "passion": [
+          "Tes relations sont marquées par l’intensité.",
+          "Tu recherches des émotions fortes en amour.",
+          "La passion guide tes élans."
+        ],
+        "liberte": [
+          "Tu ressens un besoin d’indépendance en amour.",
+          "Tu tiens à préserver ton espace personnel.",
+          "La liberté est essentielle dans tes relations."
+        ]
+      },
+      "work": {
+        "ambition": [
+          "Tu es fortement tourné vers tes objectifs.",
+          "Ta carrière prend une place importante.",
+          "Tu veux avancer et réussir."
+        ],
+        "repos": [
+          "Tu ressens le besoin de ralentir.",
+          "Le repos devient une priorité.",
+          "Tu cherches à lever le pied."
+        ]
+      },
+      "wellbeing": {
+        "aligne": [
+          "Tu es plutôt en phase avec toi-même.",
+          "Ton équilibre intérieur est présent.",
+          "Tu arrives à prendre soin de toi."
+        ],
+        "neglige": [
+          "Ton bien-être passe peut-être au second plan.",
+          "Tu oublies parfois de t’écouter.",
+          "Il serait bon de te recentrer."
+        ]
+      },
+      "outro": [
+        "Fais-toi confiance pour la suite.",
+        "Tout évolue dans la bonne direction.",
+        "Prends le temps de t’écouter."
+      ]
+    }
+  ]
+}
