@@ -12,6 +12,16 @@
           "Une certaine confiance te guide.",
           "Tu sembles aligné avec tes choix."
         ],
+        "prudent": [
+          "Tu avances avec mesure et discernement.",
+          "Une prudence éclairée accompagne tes décisions.",
+          "Tu préfères évaluer avant de t’engager."
+        ],
+        "incertain": [
+          "Le chemin devant toi reste flou pour l’instant.",
+          "Tu hésites encore sur la direction à prendre.",
+          "Une part de toi attend d’y voir plus clair."
+        ],
         "anxieux": [
           "Des doutes peuvent apparaître.",
           "Une certaine tension intérieure se fait sentir.",
@@ -23,6 +33,16 @@
           "Tes relations sont marquées par l’intensité.",
           "Tu recherches des émotions fortes en amour.",
           "La passion guide tes élans."
+        ],
+        "stabilite": [
+          "Tu cherches une relation rassurante et solide.",
+          "La sécurité affective compte beaucoup pour toi.",
+          "Tu apprécies la constance et le soutien d’un partenaire."
+        ],
+        "profondeur": [
+          "Tu aspires à une connexion sincère et profonde.",
+          "Tu veux grandir et évoluer à travers tes relations.",
+          "Tu privilégies l’authenticité aux apparences."
         ],
         "liberte": [
           "Tu ressens un besoin d’indépendance en amour.",
@@ -36,6 +56,16 @@
           "Ta carrière prend une place importante.",
           "Tu veux avancer et réussir."
         ],
+        "equilibre": [
+          "Tu cherches à concilier tes engagements et ta vie personnelle.",
+          "Trouver le juste milieu est ta priorité du moment.",
+          "Tu veux avancer sans t’épuiser."
+        ],
+        "exploration": [
+          "Tu es ouvert à de nouvelles opportunités.",
+          "Une envie de changement professionnel se fait sentir.",
+          "Tu explores des chemins encore inconnus."
+        ],
         "repos": [
           "Tu ressens le besoin de ralentir.",
           "Le repos devient une priorité.",
@@ -48,10 +78,20 @@
           "Ton équilibre intérieur est présent.",
           "Tu arrives à prendre soin de toi."
         ],
+        "instable": [
+          "Tu prends soin de toi par moments, mais pas toujours.",
+          "Ton équilibre vacille selon les jours.",
+          "Tu oscilles entre attention et négligence envers toi-même."
+        ],
         "neglige": [
           "Ton bien-être passe peut-être au second plan.",
           "Tu oublies parfois de t’écouter.",
           "Il serait bon de te recentrer."
+        ],
+        "perdu": [
+          "Tu cherches encore comment vraiment prendre soin de toi.",
+          "Le chemin vers ton bien-être reste à découvrir.",
+          "Tu n’as pas encore trouvé ce qui te fait du bien."
         ]
       },
       "outro": [
