@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,13 +6,60 @@ import {
   ImageBackground,
   StyleSheet,
   useWindowDimensions,
+  Alert,
+  PermissionsAndroid,
+  Platform,
 } from "react-native";
+import { captureRef } from "react-native-view-shot";
+import RNFS from "react-native-fs";
 
 import { getZodiacSign } from "./zodiac";
+
+const PRINT_DIR = `${RNFS.PicturesDirectoryPath}/ToPrint`;
+
+async function ensureWritePermission() {
+  if (Platform.OS !== "android" || Platform.Version >= 29) return true;
+  const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  );
+  return granted === PermissionsAndroid.RESULTS.GRANTED;
+}
 
 export default function ResultScreen({ result, birthDate, onBack }) {
   const sign = getZodiacSign(birthDate);
   const { width, height } = useWindowDimensions();
+  const cardRef = useRef(null);
+  const [printing, setPrinting] = useState(false);
+
+  const handlePrint = async () => {
+    if (printing) return;
+    setPrinting(true);
+    try {
+      const ok = await ensureWritePermission();
+      if (!ok) {
+        Alert.alert("Permission refusée", "Impossible d'écrire le fichier.");
+        return;
+      }
+
+      const tmpUri = await captureRef(cardRef, {
+        format: "png",
+        quality: 1,
+        result: "tmpfile",
+      });
+
+      const dirExists = await RNFS.exists(PRINT_DIR);
+      if (!dirExists) await RNFS.mkdir(PRINT_DIR);
+
+      const destPath = `${PRINT_DIR}/horoscope_${Date.now()}.png`;
+      await RNFS.moveFile(tmpUri, destPath);
+
+      Alert.alert("Impression envoyée", "Le fichier a été déposé.");
+    } catch (e) {
+      Alert.alert("Erreur d'impression", String(e?.message || e));
+    } finally {
+      setPrinting(false);
+    }
+  };
 
   const cardSize = {
     width: width * 0.9,
@@ -38,6 +85,7 @@ export default function ResultScreen({ result, birthDate, onBack }) {
 
       {sign?.image ? (
         <ImageBackground
+          ref={cardRef}
           source={sign.image}
           style={[styles.card, cardSize]}
           imageStyle={styles.cardImage}
@@ -47,7 +95,7 @@ export default function ResultScreen({ result, birthDate, onBack }) {
           <View style={styles.cardContent}>{Content}</View>
         </ImageBackground>
       ) : (
-        <View style={[styles.card, cardSize]}>
+        <View ref={cardRef} style={[styles.card, cardSize]}>
           {sign && (
             <Text style={styles.bgSymbol} pointerEvents="none">
               {sign.symbol}
@@ -58,12 +106,13 @@ export default function ResultScreen({ result, birthDate, onBack }) {
       )}
 
       <TouchableOpacity
-        style={styles.printButton}
-        onPress={() => {
-          // TODO: implémenter la fonctionnalité d'impression
-        }}
+        style={[styles.printButton, printing && styles.printButtonDisabled]}
+        onPress={handlePrint}
+        disabled={printing}
       >
-        <Text style={styles.printButtonText}>🖨  Imprimer</Text>
+        <Text style={styles.printButtonText}>
+          {printing ? "Envoi…" : "🖨  Imprimer"}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -152,6 +201,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 10,
     alignItems: "center",
+  },
+  printButtonDisabled: {
+    opacity: 0.6,
   },
   printButtonText: {
     color: "#fff",
