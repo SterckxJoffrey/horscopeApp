@@ -1,16 +1,56 @@
 {
   "variants": [
     {
-      "intro": [
-        "En ce moment, une énergie particulière t'entoure.",
-        "Tu entres dans une phase intéressante de ta vie.",
-        "Une dynamique nouvelle semble émerger pour toi.",
-        "Une opportunité inattendue pourrait bien croiser ton chemin prochainement.",
-        "Les étoiles semblent s'aligner pour t'offrir de nouvelles perspectives.",
-        "Tu t'apprêtes à ouvrir un tout nouveau chapitre de ton histoire.",
-        "Le vent du changement souffle doucement sur ton quotidien.",
-        "Une sensation de renouveau commence à se faire sentir autour de toi."
-      ],
+      "intro": {
+        "belier": [
+          "Ton audace naturelle bouillonne et te pousse vers de nouveaux défis.",
+          "Une impulsion créatrice s'empare de ton esprit fonceur en ce moment."
+        ],
+        "taureau": [
+          "Ta force tranquille se prépare à construire quelque chose de durable.",
+          "Une envie de confort et de plaisirs sensoriels guide tes pas actuels."
+        ],
+        "gemeaux": [
+          "Ta curiosité s'éveille face à des idées qui stimulent ton esprit vif.",
+          "Le besoin de communiquer et de tisser des liens légers se fait sentir."
+        ],
+        "cancer": [
+          "Ton intuition profonde te guide vers un besoin de protection et de douceur.",
+          "Une sensibilité accrue t'invite à te reconnecter à tes racines émotionnelles."
+        ],
+        "lion": [
+          "Ta lumière intérieure brille intensément, prête à rayonner sur ton entourage.",
+          "Une envie de reconnaissance et de projets généreux t'anime aujourd'hui."
+        ],
+        "vierge": [
+          "Ton sens de l'analyse s'affine pour mettre de l'ordre dans tes projets.",
+          "Une quête de perfection et d'utilité oriente tes actions quotidiennes."
+        ],
+        "balance": [
+          "Ton besoin d'harmonie te pousse à chercher l'équilibre dans tes échanges.",
+          "Une quête de justice et de beauté influence tes réflexions du moment."
+        ],
+        "scorpion": [
+          "Ta force de transformation t'entraîne vers une introspection puissante.",
+          "Ton flair magnétique te permet de percer à jour les mystères qui t'entourent."
+        ],
+        "sagittaire": [
+          "Ton soif d'aventure et de grands horizons se réveille avec enthousiasme.",
+          "Ton optimisme naturel t'ouvre des portes vers de nouvelles quêtes de sens."
+        ],
+        "capricorne": [
+          "Ta persévérance légendaire se focalise sur une ambition à long terme.",
+          "Une structure solide se dessine grâce à ton sens inné des responsabilités."
+        ],
+        "verseau": [
+          "Ton esprit visionnaire imagine déjà le monde de demain avec originalité.",
+          "Un besoin d'indépendance et de renouveau souffle sur tes idées actuelles."
+        ],
+        "poissons": [
+          "Ton imagination débordante t'invite à plonger dans un océan de rêves.",
+          "Ta grande empathie te connecte aux courants invisibles de ton environnement."
+        ]
+      },
       "tones": {
         "confiant": [
           "Tu avances avec assurance.",
@@ -18,9 +58,9 @@
           "Tu sembles aligné avec tes choix.",
           "Chacun de tes pas témoigne de ta détermination.",
           "Tu rayonnes d'une assurance naturelle qui attire les bonnes choses.",
-          "Rien ne semble pouvoir ébranler ta certitude intérieure.",
-          "Tu possèdes toutes les clés pour surmonter les obstacles actuels.",
-          "Ta force tranquille t'aide à avancer avec une grande clarté."
+          "Ta force intérieure est ton meilleur atout en ce moment.",
+          "Rien ne semble pouvoir ébranler ta certitude actuelle.",
+          "Tu occupes l'espace avec une légitimité nouvelle."
         ],
         "prudent": [
           "Tu avances avec mesure et discernement.",
@@ -28,9 +68,9 @@
           "Tu préfères évaluer avant de t’engager.",
           "Tu prends le temps de peser le pour et le contre avant de te lancer.",
           "La sagesse guide tes pas avec beaucoup de discernement.",
-          "Tu observes attentivement ton environnement avant d'agir.",
-          "Préférer la sécurité à la précipitation est ta force du moment.",
-          "Chaque détail compte à tes yeux pour éviter les faux pas."
+          "Tu avances à tâtons, mais avec une grande lucidité.",
+          "Ton intuition te souffle de ne pas précipiter les choses.",
+          "Chaque mouvement est calculé pour éviter les faux pas."
         ],
         "incertain": [
           "Le chemin devant toi reste flou pour l’instant.",
@@ -38,9 +78,9 @@
           "Une part de toi attend d’y voir plus clair.",
           "Le brouillard commence lentement à se dissiper, laisse-lui le temps.",
           "Il est tout à fait normal de se poser des questions en ce moment.",
-          "Tu es à la croisée des chemins et chaque option mérite réflexion.",
-          "Le manque de garanties te pousse à temporiser tes choix.",
-          "Parfois, ne pas savoir est la première étape vers une vraie découverte."
+          "Tu es à la recherche d'un signe pour confirmer tes intuitions.",
+          "Le doute s'installe, mais il est souvent précurseur d'un choix fort.",
+          "Tu te sens entre deux eaux, en attente d'un déclic."
         ],
         "anxieux": [
           "Des doutes peuvent apparaître.",
@@ -48,9 +88,9 @@
           "Tu ressens peut-être une forme d’inquiétude.",
           "Ne laisse pas ces inquiétudes prendre le dessus sur ton bien-être.",
           "Prends un instant pour respirer profondément et apaiser ton esprit.",
-          "Le poids du futur semble peser un peu trop lourd sur tes épaules.",
-          "Accorde-toi le droit de relâcher la pression que tu t'imposes.",
-          "Cette agitation passagère finira par laisser place au calme."
+          "Le poids des responsabilités semble peser sur tes épaules.",
+          "Ton esprit s'emballe parfois face à l'inconnu.",
+          "Cherche l'ancrage nécessaire pour calmer ce tumulte intérieur."
         ]
       },
       "love": {
@@ -60,9 +100,9 @@
           "La passion guide tes élans.",
           "Ton cœur bat plus fort et ton désir d'engagement est sincère.",
           "Tu souhaites vivre des moments intenses et inoubliables avec l'autre.",
-          "Pour toi, l'amour doit vibrer fort ou ne pas être.",
-          "Tu laisses tes sentiments s'exprimer sans filtre ni retenue.",
-          "Une étincelle puissante cherche à s'embraser dans ta vie amoureuse."
+          "Le feu des sentiments brûle avec une ardeur nouvelle.",
+          "Tu te laisses porter par des coups de cœur foudroyants.",
+          "L'attraction est le moteur principal de tes interactions."
         ],
         "stabilite": [
           "Tu cherches une relation rassurante et solide.",
@@ -70,9 +110,9 @@
           "Tu apprécies la constance et le soutien d’un partenaire.",
           "Construire un foyer ou une relation pérenne est ta ligne de conduite.",
           "La confiance mutuelle est le pilier sur lequel tu bâtis ton avenir.",
-          "Tu as besoin de repères solides pour pouvoir ouvrir ton cœur.",
-          "Les gestes simples du quotidien ont plus de valeur que les grands discours.",
-          "Tu aspires à une complicité tranquille, sans drames ni vagues."
+          "Tu aspires à un havre de paix où l'amour est synonyme de calme.",
+          "La routine amoureuse te semble douce et protectrice.",
+          "Tu privilégies les racines profondes aux flammes éphémères."
         ],
         "profondeur": [
           "Tu aspires à une connexion sincère et profonde.",
@@ -80,9 +120,9 @@
           "Tu privilégies l’authenticité aux apparences.",
           "Tu cherches à toucher l'âme de l'autre et non pas seulement sa surface.",
           "Les conversations intimes et authentiques sont ta source de bonheur.",
-          "Tu as besoin d'un partage d'esprit et d'une vraie résonance mutuelle.",
-          "Les faux-semblants n'ont plus leur place dans ta vie affective.",
-          "Tu es prêt à te révéler tel que tu es et à accueillir l'autre sans masque."
+          "Chaque rencontre est pour toi une occasion de découverte spirituelle.",
+          "Le lien invisible qui t'unit aux autres est ce qui compte le plus.",
+          "Tu as besoin d'une résonance émotionnelle totale avec l'autre."
         ],
         "liberte": [
           "Tu ressens un besoin d’indépendance en amour.",
@@ -90,9 +130,9 @@
           "La liberté est essentielle dans tes relations.",
           "Tu as besoin d'air pour respirer et t'épanouir pleinement.",
           "Garder ton indépendance te permet de mieux t'investir.",
-          "Aimer ne signifie pas s'oublier, et tu y veilles particulièrement.",
-          "Tu t'épanouis dans un lien qui respecte le rythme de chacun.",
-          "La confiance pour toi s'accorde sans cage ni chaînes."
+          "Tu fuis les attaches trop contraignantes pour préserver ton autonomie.",
+          "Aimer sans s'enfermer est ton credo actuel.",
+          "Tu t'épanouis dans la fluidité et le respect de tes jardins secrets."
         ]
       },
       "work": {
@@ -102,9 +142,9 @@
           "Tu veux avancer et réussir.",
           "Tu te donnes les moyens de gravir les échelons et de réussir.",
           "Chaque projet est une nouvelle occasion de prouver ta valeur.",
-          "Ta motivation actuelle te pousse à viser toujours plus haut.",
-          "Tu as soif de reconnaissance et de victoires professionnelles.",
-          "Aucun défi ne te semble trop grand pour atteindre tes rêves."
+          "Ta soif de réussite te pousse à te dépasser chaque jour.",
+          "Tu ne te contentes pas de l'existant, tu veux bâtir ton empire.",
+          "Les défis professionnels sont ton carburant favori."
         ],
         "equilibre": [
           "Tu cherches à concilier tes engagements et ta vie personnelle.",
@@ -112,9 +152,9 @@
           "Tu veux avancer sans t’épuiser.",
           "Tu veilles à ne pas sacrifier ta vie personnelle au profit du travail.",
           "Tu as compris que le repos est aussi productif que le travail.",
-          "L'harmonie entre vie pro et vie perso est ta clé de voûte.",
-          "Tu apprends à dire non pour protéger ton temps libre.",
-          "Réussir ta vie est pour toi bien plus important que réussir dans la vie."
+          "Le succès n'a de sens pour toi que s'il est partagé sereinement.",
+          "Tu apprends à dire non pour protéger ton temps de vie.",
+          "Harmoniser tes obligations et tes envies est ton grand défi."
         ],
         "exploration": [
           "Tu es ouvert à de nouvelles opportunités.",
@@ -122,9 +162,9 @@
           "Tu explores des chemins encore inconnus.",
           "Tu es prêt à repousser tes limites et à apprendre de nouvelles compétences.",
           "L'inconnu ne te fait pas peur, il t'attire et te stimule.",
-          "Tu as besoin de nouveauté pour nourrir ta curiosité intellectuelle.",
-          "Un virage professionnel s'impose pour redonner du sens à tes journées.",
-          "Tu oses enfin regarder au-delà de ta zone de confort habituelle."
+          "Tu envisages peut-être une reconversion ou un projet audacieux.",
+          "Ta curiosité intellectuelle te pousse vers des horizons inédits.",
+          "C'est le moment idéal pour semer les graines d'une nouvelle carrière."
         ],
         "repos": [
           "Tu ressens le besoin de ralentir.",
@@ -132,21 +172,21 @@
           "Tu cherches à lever le pied.",
           "Il est temps de recharger tes batteries pour repartir du bon pied.",
           "Prendre du recul est la meilleure façon de voir les choses clairement.",
-          "Ton corps et ton esprit te réclament une vraie pause méritée.",
-          "Mettre tes projets en veilleuse te permettra de mieux y revenir plus tard.",
-          "Tu choisis de privilégier ton calme intérieur face à l'agitation extérieure."
+          "Ton corps et ton esprit réclament une pause bien méritée.",
+          "L'agitation du monde du travail te semble soudainement trop lourde.",
+          "Le silence et le calme sont tes meilleurs alliés actuels."
         ]
       },
       "wellbeing": {
         "aligne": [
           "Tu es plutôt en phase avec toi-même.",
-          "Ton équilibre intérieur est present.",
+          "Ton équilibre intérieur est présent.",
           "Tu arrives à prendre soin de toi.",
           "Tu es en parfaite harmonie entre ton corps et ton esprit.",
           "Tu écoutes tes besoins et tu y réponds avec bienveillance.",
-          "Une douce sérénité t'accompagne au quotidien désormais.",
-          "Tu te sens solide, ancré et pleinement à ta place.",
-          "Prendre du temps pour toi est devenu un automatisme salvateur."
+          "Une sérénité contagieuse se dégage de ta personne.",
+          "Tu as trouvé ton rythme de croisière émotionnel.",
+          "Tu te sens solide, ancré et prêt à affronter n'importe quoi."
         ],
         "instable": [
           "Tu prends soin de toi par moments, mais pas toujours.",
@@ -154,9 +194,9 @@
           "Tu oscilles entre attention et négligence envers toi-même.",
           "Il te manque parfois un peu de régularité dans tes bonnes habitudes.",
           "Essaie de trouver une routine qui t'apporte de la constance.",
-          "Tu te laisses facilement déborder par les urgences des autres.",
-          "Ton bien-être est une montagne russe émotionnelle ces derniers temps.",
-          "Trouver une ancre solide t'aiderait à stabiliser tes journées."
+          "Ton moral joue aux montagnes russes ces derniers temps.",
+          "Tu passes de l'enthousiasme à la fatigue sans prévenir.",
+          "La discipline personnelle est un défi que tu tentes de relever."
         ],
         "neglige": [
           "Ton bien-être passe peut-être au second plan.",
@@ -164,19 +204,19 @@
           "Il serait bon de te recentrer.",
           "Prends le temps de te poser et de te demander ce dont tu as besoin.",
           "Ne mets pas tes envies et tes besoins en dernier sur ta liste.",
-          "Tu tires un peu trop sur la corde et ton corps t'envoie des signaux.",
-          "Faire plaisir aux autres ne doit pas se faire à tes dépens.",
-          "Il est grand temps de te replacer au centre de ta propre vie."
+          "Tu donnes beaucoup aux autres au détriment de ta propre énergie.",
+          "Ton corps t'envoie des signaux qu'il serait temps d'écouter.",
+          "Laisser traîner ta fatigue ne t'aidera pas à avancer."
         ],
         "perdu": [
           "Tu cherches encore comment vraiment prendre soin de toi.",
           "Le chemin vers ton bien-être reste à découvrir.",
           "Tu n’as pas encore trouvé ce qui te fait du bien.",
-          "Accorde-toi le droit d'explore différentes pratiques pour trouver ce qui te convient.",
+          "Accorde-toi le droit d'explorer différentes pratiques pour trouver ce qui te convient.",
           "Pas de précipitation, chaque petit pas compte pour te retrouver.",
-          "Tu te sens déconnecté de tes propres sensations physiques.",
-          "Par où commencer ? C'est la question qui te bloque en ce moment.",
-          "S'accorder de l'importance est un apprentissage qui demande du temps."
+          "Tu te sens déconnecté de tes propres besoins essentiels.",
+          "La quête de soi est un voyage long, sois patient avec toi-même.",
+          "Rien ne semble t'apporter le réconfort dont tu as besoin pour l'instant."
         ]
       },
       "outro": [
@@ -185,9 +225,9 @@
         "Prends le temps de t’écouter.",
         "Le meilleur est à venir, reste ouvert(e) aux surprises.",
         "N'oublie jamais que tu es l'artisan(e) de ton propre bonheur.",
-        "Accueille ce qui vient avec un esprit ouvert et apaisé.",
-        "Fais un pas après l'autre, le chemin se dessinera de lui-même.",
-        "Rappelle-toi que tu as toutes les ressources nécessaires en toi."
+        "Garde le cap, tes efforts finiront par payer.",
+        "Accueille chaque jour avec gratitude et curiosité.",
+        "L'univers a encore bien des secrets à te révéler."
       ]
     }
   ]
