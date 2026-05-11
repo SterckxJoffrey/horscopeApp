@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StatusBar, useColorScheme } from "react-native";
-import HomeScreen from "./HomeScreen.jsx";
-import ResultScreen from "./ResultScreen.jsx";
+import HomeScreen from "./pages/HomeScreen.jsx";
+import ResultScreen from "./pages/ResultScreen.jsx";
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";

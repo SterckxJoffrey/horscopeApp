@@ -13,7 +13,7 @@ import {
 import { captureRef } from "react-native-view-shot";
 import RNFS from "react-native-fs";
 
-import { getZodiacSign } from "./zodiac";
+import { getZodiacSign } from "../zodiac";
 
 const PRINT_DIR = `${RNFS.PicturesDirectoryPath}/ToPrint`;
 

@@ -8,8 +8,8 @@ import {
   StyleSheet,
 } from "react-native";
 
-import data from "./data.json";
-import { generateText } from "./Horoscope";
+import data from "../data.json";
+import { generateText } from "../Horoscope";
 
 const formatBirthDate = (text) => {
   const digits = text.replace(/\D/g, "").slice(0, 8);
