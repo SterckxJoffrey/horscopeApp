@@ -10,6 +10,7 @@ import {
 
 import data from "../data.json";
 import { generateText } from "../Horoscope";
+import { getZodiacSign } from "../zodiac";
 
 const formatBirthDate = (text) => {
   const digits = text.replace(/\D/g, "").slice(0, 8);
@@ -30,6 +31,9 @@ const isValidBirthDate = (str) => {
     date <= new Date()
   );
 };
+
+// 1. Importe ta fonction depuis le bon fichier (ajuste le chemin)
+
 
 // 🔹 Questions
 const questions = {
@@ -92,7 +96,15 @@ export default function HomeScreen({ onSubmit }) {
     Object.values(answers).every((v) => v !== null) && dateValid;
 
   const handleSubmit = () => {
-    const text = generateText(data, answers);
+    const zodiacInfo = getZodiacSign(birthDate);
+
+    // Sécurité : si on ne trouve pas le signe, on arrête
+    if (!zodiacInfo) return;
+      const signKey = zodiacInfo.name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const text = generateText(data, answers, signKey);
     onSubmit({ text, birthDate });
   };
 
