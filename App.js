@@ -1,24 +1,58 @@
 import React, { useState } from "react";
-import { StatusBar, useColorScheme } from "react-native";
+import {
+  StatusBar,
+  ImageBackground,
+  View,
+  StyleSheet,
+  useColorScheme,
+} from "react-native";
+import Home from "./pages/Home.jsx";
 import HomeScreen from "./pages/HomeScreen.jsx";
 import ResultScreen from "./pages/ResultScreen.jsx";
+import Header from "./components/header.jsx";
+
+import background from "./assets/home_background.png";
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";
+  const [started, setStarted] = useState(false);
   const [submission, setSubmission] = useState(null);
 
+  const goHome = () => {
+    setSubmission(null);
+    setStarted(false);
+  };
+
   return (
-    <>
+    <ImageBackground
+      source={background}
+      style={styles.root}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay} pointerEvents="none" />
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      {submission === null ? (
+      <Header />
+      {!started ? (
+        <Home onStart={() => setStarted(true)} />
+      ) : submission === null ? (
         <HomeScreen onSubmit={setSubmission} />
       ) : (
         <ResultScreen
           result={submission.text}
           birthDate={submission.birthDate}
-          onBack={() => setSubmission(null)}
+          onBack={goHome}
         />
       )}
-    </>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(15, 23, 42, 0.35)",
+  },
+});

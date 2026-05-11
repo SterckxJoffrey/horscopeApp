@@ -121,7 +121,7 @@ export default function ResultScreen({ result, birthDate, onBack }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0f172a",
+    backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
