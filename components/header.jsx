@@ -14,7 +14,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   header: {
     width: "100%",
-    maxHeight : "20%",
+    maxHeight : "15%",
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
   logo: {
     height: "100%",
     width: "100%",
+    transform: [{ scale: 1.6 }],
   },
 });

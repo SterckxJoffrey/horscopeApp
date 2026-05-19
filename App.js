@@ -4,6 +4,9 @@ import {
   ImageBackground,
   View,
   StyleSheet,
+  Text,
+  TextInput,
+  Platform,
   useColorScheme,
 } from "react-native";
 import Home from "./pages/Home.jsx";
@@ -12,6 +15,21 @@ import ResultScreen from "./pages/ResultScreen.jsx";
 import Header from "./components/header.jsx";
 
 import background from "./assets/home_background.png";
+
+const APP_FONT = Platform.select({
+  ios: "CenturyGothic",
+  android: "centurygothic",
+  default: "centurygothic",
+});
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.style = [{ fontFamily: APP_FONT }, Text.defaultProps.style];
+
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.style = [
+  { fontFamily: APP_FONT },
+  TextInput.defaultProps.style,
+];
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";
@@ -35,7 +53,7 @@ export default function App() {
       {!started ? (
         <Home onStart={() => setStarted(true)} />
       ) : submission === null ? (
-        <HomeScreen onSubmit={setSubmission} />
+        <HomeScreen onSubmit={setSubmission} onHome={goHome} />
       ) : (
         <ResultScreen
           result={submission.text}
