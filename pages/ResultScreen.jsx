@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useMemo } from "react";
 import {
   View,
   Text,
   Image,
+  ImageBackground,
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
@@ -14,7 +15,10 @@ import { captureRef } from "react-native-view-shot";
 import RNFS from "react-native-fs";
 
 import { getZodiacSign } from "../zodiac";
+import { composeText } from "../Horoscope";
 import logoHeader from "../assets/logo_header.png";
+import cardBackground from "../assets/home_background.png";
+import { LanguageContext } from "../LanguageContext.js";
 
 import Aries from "../assets/signs/aries.svg";
 import Taurus from "../assets/signs/taurus.svg";
@@ -28,6 +32,19 @@ import Sagittarius from "../assets/signs/sagittarius.svg";
 import Capricorn from "../assets/signs/capricorn.svg";
 import Aquarius from "../assets/signs/aquarius.svg";
 import Pisces from "../assets/signs/pisces.svg";
+
+import AriesStars from "../assets/signs_stars/aries_stars.svg";
+import TaurusStars from "../assets/signs_stars/taurus_stars.svg";
+import GeminiStars from "../assets/signs_stars/gemini_stars.svg";
+import CancerStars from "../assets/signs_stars/cancer_stars.svg";
+import LeoStars from "../assets/signs_stars/leo_stars.svg";
+import VirgoStars from "../assets/signs_stars/virgo_stars.svg";
+import LibraStars from "../assets/signs_stars/libra_svg.svg";
+import ScorpioStars from "../assets/signs_stars/scorpio_stars.svg";
+import SagittariusStars from "../assets/signs_stars/sagitrarius_stars.svg";
+import CapricornStars from "../assets/signs_stars/capricorn_stars.svg";
+import AquariusStars from "../assets/signs_stars/aquarius_stars.svg";
+import PiscesStars from "../assets/signs_stars/pisces_stars.svg";
 
 const SIGN_SVG = {
   "Bélier": Aries,
@@ -44,6 +61,21 @@ const SIGN_SVG = {
   Poissons: Pisces,
 };
 
+const SIGN_STARS_SVG = {
+  "Bélier": AriesStars,
+  Taureau: TaurusStars,
+  "Gémeaux": GeminiStars,
+  Cancer: CancerStars,
+  Lion: LeoStars,
+  Vierge: VirgoStars,
+  Balance: LibraStars,
+  Scorpion: ScorpioStars,
+  Sagittaire: SagittariusStars,
+  Capricorne: CapricornStars,
+  Verseau: AquariusStars,
+  Poissons: PiscesStars,
+};
+
 const PRINT_DIR = `${RNFS.PicturesDirectoryPath}/ToPrint`;
 
 async function ensureWritePermission() {
@@ -54,8 +86,13 @@ async function ensureWritePermission() {
   return granted === PermissionsAndroid.RESULTS.GRANTED;
 }
 
-export default function ResultScreen({ result, birthDate, onBack }) {
+export default function ResultScreen({ answers, signKey, picks, birthDate, onBack }) {
+  const { t, language } = useContext(LanguageContext);
   const sign = getZodiacSign(birthDate);
+  const result = useMemo(
+    () => composeText(answers, signKey, picks, language),
+    [answers, signKey, picks, language]
+  );
   const { width, height } = useWindowDimensions();
   const cardRef = useRef(null);
   const [printing, setPrinting] = useState(false);
@@ -66,7 +103,7 @@ export default function ResultScreen({ result, birthDate, onBack }) {
     try {
       const ok = await ensureWritePermission();
       if (!ok) {
-        Alert.alert("Permission refusée", "Impossible d'écrire le fichier.");
+        Alert.alert(t.alerts.permissionDenied, t.alerts.cannotWriteFile);
         return;
       }
 
@@ -82,9 +119,9 @@ export default function ResultScreen({ result, birthDate, onBack }) {
       const destPath = `${PRINT_DIR}/horoscope_${Date.now()}.png`;
       await RNFS.moveFile(tmpUri, destPath);
 
-      Alert.alert("Impression envoyée", "Le fichier a été déposé.");
+      Alert.alert(t.alerts.printSent, t.alerts.fileSaved);
     } catch (e) {
-      Alert.alert("Erreur d'impression", String(e?.message || e));
+      Alert.alert(t.alerts.printError, String(e?.message || e));
     } finally {
       setPrinting(false);
     }
@@ -102,16 +139,36 @@ export default function ResultScreen({ result, birthDate, onBack }) {
         onPress={onBack}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
-        <Text style={styles.homeButtonText}>Accueil</Text>
+        <Text style={styles.homeButtonText}>{t.buttons.home}</Text>
       </TouchableOpacity>
 
-      <View ref={cardRef} style={[styles.card, cardSize]}>
+      <ImageBackground
+        ref={cardRef}
+        source={cardBackground}
+        style={[styles.card, cardSize]}
+        imageStyle={styles.cardImage}
+        resizeMode="cover"
+      >
         <View style={styles.cardContent}>
           <Image
             source={logoHeader}
             style={styles.cardLogo}
             resizeMode="contain"
           />
+          <View style={styles.signStarsWrap}>
+            {sign && SIGN_STARS_SVG[sign.name] ? (
+              (() => {
+                const SignStarsSvg = SIGN_STARS_SVG[sign.name];
+                return (
+                  <SignStarsSvg
+                    width={620}
+                    height={520}
+                    preserveAspectRatio="xMidYMid meet"
+                  />
+                );
+              })()
+            ) : null}
+          </View>
           <View style={styles.cardTextBottom}>
             {sign && SIGN_SVG[sign.name] ? (
               (() => {
@@ -128,7 +185,7 @@ export default function ResultScreen({ result, birthDate, onBack }) {
             <Text style={styles.result}>{result.trim()}</Text>
           </View>
         </View>
-      </View>
+      </ImageBackground>
 
       <TouchableOpacity
         style={[styles.printButton, printing && styles.printButtonDisabled]}
@@ -136,7 +193,7 @@ export default function ResultScreen({ result, birthDate, onBack }) {
         disabled={printing}
       >
         <Text style={styles.printButtonText}>
-          {printing ? "Envoi…" : "Imprimer"}
+          {printing ? t.buttons.sending : t.buttons.print}
         </Text>
       </TouchableOpacity>
     </View>
@@ -160,7 +217,7 @@ const styles = StyleSheet.create({
   },
   homeButton: {
     position: "absolute",
-    bottom: 30,
+    bottom: "5%",
     alignSelf: "center",
     backgroundColor: "transparent",
     paddingVertical: 16,
@@ -179,6 +236,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   card: {
+    marginBottom: "8%",
     backgroundColor: "transparent",
     borderRadius: 16,
     borderWidth: 2,
@@ -186,6 +244,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "center",
     boxShadow: whiteGlow,
+  },
+  cardImage: {
+    borderRadius: 16,
   },
   cardContent: {
     flex: 1,
@@ -203,6 +264,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 30,
   },
+  signStarsWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 12,
+  },
   signSvg: {
     marginBottom: 20,
   },
@@ -217,7 +283,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   printButton: {
-    marginTop: 24,
     alignSelf: "center",
     backgroundColor: "#fff",
     paddingVertical: 16,

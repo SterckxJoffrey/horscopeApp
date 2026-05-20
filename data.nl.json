@@ -1,0 +1,234 @@
+{
+  "variants": [
+    {
+      "intro": {
+        "belier": [
+          "Je natuurlijke durf borrelt op en stuwt je naar nieuwe uitdagingen.",
+          "Een creatieve impuls neemt op dit moment bezit van je voortvarende geest."
+        ],
+        "taureau": [
+          "Je rustige kracht maakt zich klaar om iets duurzaams op te bouwen.",
+          "Een verlangen naar comfort en zintuiglijk genot leidt je huidige stappen."
+        ],
+        "gemeaux": [
+          "Je nieuwsgierigheid ontwaakt bij ideeën die je levendige geest prikkelen.",
+          "De behoefte om te communiceren en lichte banden te weven dringt zich op."
+        ],
+        "cancer": [
+          "Je diepe intuïtie leidt je naar een behoefte aan bescherming en zachtheid.",
+          "Een verhoogde gevoeligheid nodigt je uit om je opnieuw met je emotionele wortels te verbinden."
+        ],
+        "lion": [
+          "Je innerlijke licht schijnt intens en is klaar om op je omgeving te stralen.",
+          "Een verlangen naar erkenning en grootmoedige projecten bezielt je vandaag."
+        ],
+        "vierge": [
+          "Je analytisch vermogen scherpt zich aan om orde te brengen in je plannen.",
+          "Een zoektocht naar perfectie en nut stuurt je dagelijkse handelen."
+        ],
+        "balance": [
+          "Je behoefte aan harmonie zet je aan om evenwicht in je contacten te zoeken.",
+          "Een zoektocht naar rechtvaardigheid en schoonheid kleurt je huidige overpeinzingen."
+        ],
+        "scorpion": [
+          "Je transformerende kracht voert je mee in een diepgaande introspectie.",
+          "Je magnetische flair laat je doordringen tot de mysteries om je heen."
+        ],
+        "sagittaire": [
+          "Je dorst naar avontuur en verre horizonten ontwaakt vol enthousiasme.",
+          "Je natuurlijke optimisme opent deuren naar nieuwe zoektochten naar zin."
+        ],
+        "capricorne": [
+          "Je legendarische volharding richt zich op een ambitie op lange termijn.",
+          "Een stevige structuur tekent zich af dankzij je aangeboren verantwoordelijkheidsgevoel."
+        ],
+        "verseau": [
+          "Je visionaire geest schetst de wereld van morgen al met originaliteit.",
+          "Een behoefte aan onafhankelijkheid en vernieuwing waait door je huidige ideeën."
+        ],
+        "poissons": [
+          "Je overvloedige verbeelding nodigt je uit om in een oceaan van dromen te duiken.",
+          "Je grote empathie verbindt je met de onzichtbare stromingen van je omgeving."
+        ]
+      },
+      "tones": {
+        "confiant": [
+          "Je gaat vooruit met zelfvertrouwen.",
+          "Een zeker vertrouwen stuurt je.",
+          "Je lijkt in lijn met je keuzes.",
+          "Elke stap die je zet getuigt van je vastberadenheid.",
+          "Je straalt een natuurlijke zekerheid uit die de goede dingen aantrekt.",
+          "Je innerlijke kracht is op dit moment je grootste troef.",
+          "Niets lijkt je huidige overtuiging te kunnen wankelen.",
+          "Je neemt je plaats in met een nieuwe vanzelfsprekendheid."
+        ],
+        "prudent": [
+          "Je gaat vooruit met maat en inzicht.",
+          "Een verlichte voorzichtigheid begeleidt je beslissingen.",
+          "Je weegt liever af voor je je engageert.",
+          "Je neemt de tijd om af te wegen voor je je in iets stort.",
+          "Wijsheid leidt je stappen met veel onderscheidingsvermogen.",
+          "Je gaat tastend vooruit, maar met grote helderheid.",
+          "Je intuïtie fluistert je in om de dingen niet te overhaasten.",
+          "Elke beweging is doordacht om misstappen te vermijden."
+        ],
+        "incertain": [
+          "Het pad voor je blijft voorlopig vaag.",
+          "Je aarzelt nog welke richting je zal nemen.",
+          "Een deel van jou wacht tot het helderder wordt.",
+          "De mist begint langzaam op te trekken, geef het tijd.",
+          "Het is volkomen normaal om op dit moment vragen te stellen.",
+          "Je zoekt een teken dat je intuïties bevestigt.",
+          "Twijfel sluipt binnen, maar gaat vaak vooraf aan een sterke keuze.",
+          "Je voelt je tussen twee werelden, in afwachting van een klik."
+        ],
+        "anxieux": [
+          "Twijfels kunnen opduiken.",
+          "Een zekere innerlijke spanning laat zich voelen.",
+          "Je voelt misschien een vorm van ongerustheid.",
+          "Laat deze zorgen niet de overhand krijgen op je welzijn.",
+          "Neem even de tijd om diep adem te halen en je geest tot rust te brengen.",
+          "Het gewicht van verantwoordelijkheden lijkt op je schouders te drukken.",
+          "Je geest slaat soms op hol tegenover het onbekende.",
+          "Zoek de nodige verankering om deze innerlijke onrust te kalmeren."
+        ]
+      },
+      "love": {
+        "passion": [
+          "Je relaties worden getekend door intensiteit.",
+          "Je zoekt sterke emoties in de liefde.",
+          "Passie stuurt je elan.",
+          "Je hart klopt sneller en je verlangen naar betrokkenheid is oprecht.",
+          "Je wil intense en onvergetelijke momenten beleven met de ander.",
+          "Het vuur van de gevoelens brandt met een nieuwe gloed.",
+          "Je laat je meeslepen door bliksemende liefdes op het eerste gezicht.",
+          "Aantrekkingskracht is de belangrijkste motor van je interacties."
+        ],
+        "stabilite": [
+          "Je zoekt een geruststellende en solide relatie.",
+          "Affectieve zekerheid telt veel voor je.",
+          "Je waardeert de standvastigheid en steun van een partner.",
+          "Een thuis of een duurzame relatie bouwen is je richtlijn.",
+          "Wederzijds vertrouwen is de pijler waarop je je toekomst bouwt.",
+          "Je verlangt naar een vredige haven waar liefde synoniem is met rust.",
+          "De liefdesroutine lijkt je zacht en beschermend.",
+          "Je kiest voor diepe wortels boven vluchtige vlammen."
+        ],
+        "profondeur": [
+          "Je verlangt naar een oprechte en diepe verbinding.",
+          "Je wil groeien en evolueren door je relaties.",
+          "Je verkiest authenticiteit boven schijn.",
+          "Je wil de ziel van de ander raken en niet alleen de oppervlakte.",
+          "Intieme en authentieke gesprekken zijn je bron van geluk.",
+          "Elke ontmoeting is voor jou een kans op spirituele ontdekking.",
+          "De onzichtbare band die je met anderen verbindt is wat het meest telt.",
+          "Je hebt een volledige emotionele resonantie met de ander nodig."
+        ],
+        "liberte": [
+          "Je voelt een behoefte aan onafhankelijkheid in de liefde.",
+          "Je hecht eraan je persoonlijke ruimte te bewaren.",
+          "Vrijheid is essentieel in je relaties.",
+          "Je hebt lucht nodig om te ademen en ten volle te bloeien.",
+          "Je onafhankelijkheid bewaren laat je toe je beter te geven.",
+          "Je vlucht voor te knellende banden om je autonomie te beschermen.",
+          "Liefhebben zonder je op te sluiten is op dit moment je credo.",
+          "Je bloeit op in vloeibaarheid en respect voor je geheime tuinen."
+        ]
+      },
+      "work": {
+        "ambition": [
+          "Je bent sterk gericht op je doelen.",
+          "Je carrière neemt een belangrijke plaats in.",
+          "Je wil vooruit en slagen.",
+          "Je geeft jezelf de middelen om de ladder te beklimmen en te slagen.",
+          "Elk project is een nieuwe kans om je waarde te bewijzen.",
+          "Je succeshonger drijft je om jezelf elke dag te overtreffen.",
+          "Je neemt geen genoegen met wat er is, je wil je eigen rijk bouwen.",
+          "Professionele uitdagingen zijn je favoriete brandstof."
+        ],
+        "equilibre": [
+          "Je probeert je engagementen en je persoonlijke leven te verzoenen.",
+          "Het juiste midden vinden is op dit moment je prioriteit.",
+          "Je wil vooruit zonder jezelf uit te putten.",
+          "Je waakt erover je persoonlijke leven niet aan het werk op te offeren.",
+          "Je hebt begrepen dat rust even productief is als werk.",
+          "Succes heeft voor jou alleen zin als het sereen gedeeld wordt.",
+          "Je leert nee zeggen om je leefruimte te beschermen.",
+          "Je verplichtingen en verlangens harmoniëren is je grote uitdaging."
+        ],
+        "exploration": [
+          "Je staat open voor nieuwe kansen.",
+          "Een verlangen naar professionele verandering doet zich voelen.",
+          "Je verkent paden die nog onbekend zijn.",
+          "Je bent klaar om je grenzen te verleggen en nieuwe vaardigheden te leren.",
+          "Het onbekende maakt je niet bang, het trekt je aan en prikkelt je.",
+          "Je overweegt misschien een heroriëntering of een gedurfd project.",
+          "Je intellectuele nieuwsgierigheid drijft je naar ongekende horizonten.",
+          "Het is het ideale moment om de zaden van een nieuwe carrière te zaaien."
+        ],
+        "repos": [
+          "Je voelt de nood om te vertragen.",
+          "Rust wordt een prioriteit.",
+          "Je probeert het rustiger aan te doen.",
+          "Het is tijd om je batterijen op te laden om er weer fris tegenaan te gaan.",
+          "Afstand nemen is de beste manier om de dingen helder te zien.",
+          "Je lichaam en geest vragen om een welverdiende pauze.",
+          "De drukte van de werkwereld lijkt je plots te zwaar.",
+          "Stilte en kalmte zijn op dit moment je beste bondgenoten."
+        ]
+      },
+      "wellbeing": {
+        "aligne": [
+          "Je bent vrij goed in lijn met jezelf.",
+          "Je innerlijk evenwicht is aanwezig.",
+          "Je slaagt erin voor jezelf te zorgen.",
+          "Je bent in perfecte harmonie tussen lichaam en geest.",
+          "Je luistert naar je behoeften en beantwoordt ze met mildheid.",
+          "Een aanstekelijke sereniteit straalt van je af.",
+          "Je hebt je emotionele kruissnelheid gevonden.",
+          "Je voelt je stevig, geaard en klaar om om het even wat aan te kunnen."
+        ],
+        "instable": [
+          "Je zorgt soms voor jezelf, maar niet altijd.",
+          "Je evenwicht wankelt naargelang de dag.",
+          "Je pendelt tussen aandacht en verwaarlozing van jezelf.",
+          "Het ontbreekt je soms aan regelmaat in je goede gewoonten.",
+          "Probeer een routine te vinden die je standvastigheid brengt.",
+          "Je gemoed speelt de laatste tijd achtbaan.",
+          "Je gaat zonder waarschuwing van enthousiasme naar vermoeidheid.",
+          "Persoonlijke discipline is een uitdaging die je probeert aan te gaan."
+        ],
+        "neglige": [
+          "Je welzijn komt misschien op de tweede plaats.",
+          "Je vergeet soms naar jezelf te luisteren.",
+          "Het zou goed zijn om opnieuw bij jezelf te komen.",
+          "Neem de tijd om te stoppen en jezelf af te vragen wat je nodig hebt.",
+          "Zet je verlangens en behoeften niet onderaan je lijst.",
+          "Je geeft veel aan anderen ten koste van je eigen energie.",
+          "Je lichaam stuurt je signalen waar het tijd voor is om naar te luisteren.",
+          "Je vermoeidheid laten aanslepen zal je niet helpen vooruit te komen."
+        ],
+        "perdu": [
+          "Je zoekt nog hoe je echt voor jezelf kan zorgen.",
+          "Het pad naar je welzijn is nog te ontdekken.",
+          "Je hebt nog niet gevonden wat je deugd doet.",
+          "Gun jezelf het recht om verschillende praktijken te verkennen om te vinden wat bij je past.",
+          "Geen haast, elke kleine stap telt om jezelf terug te vinden.",
+          "Je voelt je losgekoppeld van je eigen essentiële behoeften.",
+          "De zoektocht naar jezelf is een lange reis, wees geduldig met jezelf.",
+          "Niets lijkt je voor het ogenblik de troost te bieden die je nodig hebt."
+        ]
+      },
+      "outro": [
+        "Vertrouw jezelf voor het vervolg.",
+        "Alles ontwikkelt zich in de juiste richting.",
+        "Neem de tijd om naar jezelf te luisteren.",
+        "Het beste komt nog, blijf open voor verrassingen.",
+        "Vergeet nooit dat jij de smid bent van je eigen geluk.",
+        "Houd koers, je inspanningen zullen uiteindelijk lonen.",
+        "Verwelkom elke dag met dankbaarheid en nieuwsgierigheid.",
+        "Het universum heeft je nog veel geheimen te onthullen."
+      ]
+    }
+  ]
+}

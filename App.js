@@ -13,8 +13,10 @@ import Home from "./pages/Home.jsx";
 import HomeScreen from "./pages/HomeScreen.jsx";
 import ResultScreen from "./pages/ResultScreen.jsx";
 import Header from "./components/header.jsx";
+import { LanguageProvider } from "./LanguageContext.js";
 
 import background from "./assets/home_background.png";
+import questionsBackground from "./assets/questions_background.png";
 
 const APP_FONT = Platform.select({
   ios: "CenturyGothic",
@@ -42,26 +44,30 @@ export default function App() {
   };
 
   return (
-    <ImageBackground
-      source={background}
-      style={styles.root}
-      resizeMode="cover"
-    >
-      <View style={styles.overlay} pointerEvents="none" />
-      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <Header />
-      {!started ? (
-        <Home onStart={() => setStarted(true)} />
-      ) : submission === null ? (
-        <HomeScreen onSubmit={setSubmission} onHome={goHome} />
-      ) : (
-        <ResultScreen
-          result={submission.text}
-          birthDate={submission.birthDate}
-          onBack={goHome}
-        />
-      )}
-    </ImageBackground>
+    <LanguageProvider>
+      <ImageBackground
+        source={started ? questionsBackground : background}
+        style={styles.root}
+        resizeMode="cover"
+      >
+        <View style={styles.overlay} pointerEvents="none" />
+        <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+        <Header />
+        {!started ? (
+          <Home onStart={() => setStarted(true)} />
+        ) : submission === null ? (
+          <HomeScreen onSubmit={setSubmission} onHome={goHome} />
+        ) : (
+          <ResultScreen
+            answers={submission.answers}
+            signKey={submission.signKey}
+            picks={submission.picks}
+            birthDate={submission.birthDate}
+            onBack={goHome}
+          />
+        )}
+      </ImageBackground>
+    </LanguageProvider>
   );
 }
 

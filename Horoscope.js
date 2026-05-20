@@ -1,61 +1,65 @@
-import data from './data.json';
+import dataFr from './data.json';
+import dataNl from './data.nl.json';
+
+const DATA_BY_LANG = { fr: dataFr, nl: dataNl };
 
 const answersMap = {
-  amour: {
-    A: "passion",
-    B: "stabilite",
-    C: "profondeur",
-    D: "liberte"
-  },
-  travail: {
-    A: "ambition",
-    B: "equilibre",
-    C: "exploration",
-    D: "repos"
-  },
-  bienEtre: {
-    A: "aligne",
-    B: "instable",
-    C: "neglige",
-    D: "perdu"
-  },
-  futur: {
-    A: "confiant",
-    B: "prudent",
-    C: "incertain",
-    D: "anxieux"
-  }
+  amour: { A: "passion", B: "stabilite", C: "profondeur", D: "liberte" },
+  travail: { A: "ambition", B: "equilibre", C: "exploration", D: "repos" },
+  bienEtre: { A: "aligne", B: "instable", C: "neglige", D: "perdu" },
+  futur: { A: "confiant", B: "prudent", C: "incertain", D: "anxieux" },
 };
 
-function pick(arr) {
-  // Sécurité au cas où l'élément est manquant ou n'est pas un tableau
-  if (!arr || !Array.isArray(arr) || arr.length === 0) return "";
-  return arr[Math.floor(Math.random() * arr.length)];
+const rand = (n) => Math.floor(Math.random() * Math.max(1, n));
+
+export function getData(language) {
+  return DATA_BY_LANG[language] || dataFr;
 }
 
-/**
- * @param {Object} data - Ton fichier JSON enrichi
- * @param {Object} answers - Les réponses choisies (A, B, C, D)
- * @param {string} sign - Le signe de l'utilisateur (ex: "belier", "lion", etc.)
- */
-export function generateText(data, answers, sign) {
-  const v = data.variants[0];
-
-  // On récupère les clés correspondantes aux réponses
+export function pickIndices(answers, signKey, language = "fr") {
+  const v = getData(language).variants[0];
+  const sign = signKey.toLowerCase();
   const love = answersMap.amour[answers.amour];
   const work = answersMap.travail[answers.travail];
   const self = answersMap.bienEtre[answers.bienEtre];
   const mood = answersMap.futur[answers.futur];
 
-  // Normalisation du signe (au cas où il y aurait des majuscules)
-  const userSign = sign.toLowerCase();
+  return {
+    intro: rand((v.intro[sign] || []).length),
+    tone: rand((v.tones[mood] || []).length),
+    love: rand((v.love[love] || []).length),
+    work: rand((v.work[work] || []).length),
+    wellbeing: rand((v.wellbeing[self] || []).length),
+    outro: rand((v.outro || []).length),
+  };
+}
 
-  return `
-${pick(v.intro[userSign] || [])}
-${pick(v.tones[mood] || [])}
-${pick(v.love[love] || [])}
-${pick(v.work[work] || [])}
-${pick(v.wellbeing[self] || [])}
-${pick(v.outro)}
-`;
+export function composeText(answers, signKey, picks, language) {
+  const v = getData(language).variants[0];
+  const sign = signKey.toLowerCase();
+  const love = answersMap.amour[answers.amour];
+  const work = answersMap.travail[answers.travail];
+  const self = answersMap.bienEtre[answers.bienEtre];
+  const mood = answersMap.futur[answers.futur];
+
+  const pickAt = (arr, idx) => {
+    if (!Array.isArray(arr) || arr.length === 0) return "";
+    return arr[idx % arr.length];
+  };
+
+  return [
+    pickAt(v.intro[sign], picks.intro),
+    pickAt(v.tones[mood], picks.tone),
+    pickAt(v.love[love], picks.love),
+    pickAt(v.work[work], picks.work),
+    pickAt(v.wellbeing[self], picks.wellbeing),
+    pickAt(v.outro, picks.outro),
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+export function generateText(_data, answers, signKey, language = "fr") {
+  const picks = pickIndices(answers, signKey, language);
+  return composeText(answers, signKey, picks, language);
 }

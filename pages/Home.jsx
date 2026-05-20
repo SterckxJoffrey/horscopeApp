@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   TouchableOpacity,
   Text,
@@ -8,8 +8,11 @@ import {
 } from "react-native";
 
 import centerImage from "../assets/background_center.png";
+import { LanguageContext } from "../LanguageContext.js";
 
 export default function Home({ onStart }) {
+  const { t } = useContext(LanguageContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.centerImageWrap} pointerEvents="none">
@@ -19,12 +22,8 @@ export default function Home({ onStart }) {
           resizeMode="contain"
         />
         <View style={styles.centerOverlayStack}>
-          <Text style={styles.centerOverlayText}>
-            What cosmic energy{"\n"}awaits you today?
-          </Text>
-          <Text style={styles.centerOverlaySubtext}>
-            Discover your daily{"\n"}horoscope
-          </Text>
+          <Text style={styles.centerOverlayText}>{t.home.title}</Text>
+          <Text style={styles.centerOverlaySubtext}>{t.home.subtitle}</Text>
         </View>
       </View>
       <TouchableOpacity
@@ -32,7 +31,7 @@ export default function Home({ onStart }) {
         onPress={onStart}
         activeOpacity={0.8}
       >
-        <Text style={styles.startButtonText}>START</Text>
+        <Text style={styles.startButtonText}>{t.home.startButton}</Text>
       </TouchableOpacity>
     </View>
   );

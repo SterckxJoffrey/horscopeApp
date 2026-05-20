@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,9 @@ import {
   StyleSheet,
 } from "react-native";
 
-import data from "../data.json";
-import { generateText } from "../Horoscope";
+import { pickIndices } from "../Horoscope";
 import { getZodiacSign } from "../zodiac";
+import { LanguageContext } from "../LanguageContext.js";
 
 const onlyDigits = (text, max) => text.replace(/\D/g, "").slice(0, max);
 
@@ -32,57 +32,14 @@ const isValidBirthDate = (str) => {
   );
 };
 
-// 🔹 Questions (ordre = ordre d'affichage)
-const questions = [
-  {
-    key: "amour",
-    question: "Que recherches-tu dans une relation ?",
-    options: {
-      A: "De la passion et de l’aventure",
-      B: "De la sécurité et du soutien",
-      C: "De la croissance et de la profondeur",
-      D: "De la liberté et de l’indépendance",
-    },
-  },
-  {
-    key: "travail",
-    question: "Quelle est ta principale priorité en ce moment ?",
-    options: {
-      A: "Faire carrière",
-      B: "Trouver un équilibre",
-      C: "Découvrir de nouvelles opportunités",
-      D: "Prendre du repos",
-    },
-  },
-  {
-    key: "bienEtre",
-    question: "Comment prends-tu soin de toi ?",
-    options: {
-      A: "Je prends consciemment du temps pour moi",
-      B: "Parfois, mais pas assez",
-      C: "À peine",
-      D: "Je ne sais pas trop comment faire",
-    },
-  },
-  {
-    key: "futur",
-    question: "Comment envisages-tu l’avenir ?",
-    options: {
-      A: "Avec espoir",
-      B: "Prudemment optimiste",
-      C: "Incertain",
-      D: "Anxieux",
-    },
-  },
-];
-
 export default function HomeScreen({ onSubmit, onHome }) {
+  const { t } = useContext(LanguageContext);
+  const questions = t.questions;
   const [answers, setAnswers] = useState({});
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [focusedField, setFocusedField] = useState(null);
-  // step 0 = date, step 1..N = questions
   const [step, setStep] = useState(0);
 
   const monthRef = useRef(null);
@@ -99,8 +56,8 @@ export default function HomeScreen({ onSubmit, onHome }) {
       .toLowerCase()
       .normalize("NFD")
       .replace(/[̀-ͯ]/g, "");
-    const text = generateText(data, finalAnswers, signKey);
-    onSubmit({ text, birthDate });
+    const picks = pickIndices(finalAnswers, signKey);
+    onSubmit({ answers: finalAnswers, signKey, picks, birthDate });
   };
 
   const handleSelect = (questionKey, value) => {
@@ -121,7 +78,7 @@ export default function HomeScreen({ onSubmit, onHome }) {
   };
 
   const totalSteps = questions.length + 1;
-  const progressLabel = `Étape ${step + 1} / ${totalSteps}`;
+  const progressLabel = t.progress.replace("${step}", step + 1).replace("${total}", totalSteps);
 
   return (
     <ScrollView
@@ -133,12 +90,12 @@ export default function HomeScreen({ onSubmit, onHome }) {
       {step === 0 ? (
         <View style={styles.block}>
           <View style={styles.questionCard}>
-            <Text style={styles.question}>ENTER YOUR DATE OF BIRTH</Text>
+            <Text style={styles.question}>{t.dateOfBirth}</Text>
           </View>
 
           <View style={styles.dateRow}>
             <View style={styles.dateField}>
-              <Text style={styles.dateLabel}>Jour</Text>
+              <Text style={styles.dateLabel}>{t.dateLabels.day}</Text>
               <TextInput
                 placeholder="JJ"
                 placeholderTextColor="#64748b"
@@ -162,7 +119,7 @@ export default function HomeScreen({ onSubmit, onHome }) {
             </View>
 
             <View style={styles.dateField}>
-              <Text style={styles.dateLabel}>Mois</Text>
+              <Text style={styles.dateLabel}>{t.dateLabels.month}</Text>
               <TextInput
                 ref={monthRef}
                 placeholder="MM"
@@ -187,7 +144,7 @@ export default function HomeScreen({ onSubmit, onHome }) {
             </View>
 
             <View style={[styles.dateField, styles.dateFieldYear]}>
-              <Text style={styles.dateLabel}>Année</Text>
+              <Text style={styles.dateLabel}>{t.dateLabels.year}</Text>
               <TextInput
                 ref={yearRef}
                 placeholder="AAAA"
@@ -210,7 +167,7 @@ export default function HomeScreen({ onSubmit, onHome }) {
 
           {dateError && (
             <Text style={styles.errorText}>
-              Date invalide. Format : JJ-MM-AAAA.
+              {t.dateError}
             </Text>
           )}
 
@@ -222,11 +179,11 @@ export default function HomeScreen({ onSubmit, onHome }) {
             onPress={() => dateValid && setStep(1)}
             disabled={!dateValid}
           >
-            <Text style={styles.buttonText}>Suivant</Text>
+            <Text style={styles.buttonText}>{t.buttons.next}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.backButton} onPress={onHome}>
-            <Text style={styles.backButtonText}>← Retour à l'accueil</Text>
+            <Text style={styles.backButtonText}>{t.buttons.backHome}</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -270,18 +227,18 @@ export default function HomeScreen({ onSubmit, onHome }) {
                     disabled={!hasAnswer}
                   >
                     <Text style={styles.buttonText}>
-                      {isLast ? "Voir mon horoscope" : "Confirmer"}
+                      {isLast ? t.buttons.viewHoroscope : t.buttons.confirm}
                     </Text>
                   </TouchableOpacity>
                 );
               })()}
 
               <TouchableOpacity style={styles.backButton} onPress={goBack}>
-                <Text style={styles.backButtonText}>← Retour</Text>
+                <Text style={styles.backButtonText}>{t.buttons.back}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.backButton} onPress={onHome}>
-                <Text style={styles.backButtonText}>← Retour à l'accueil</Text>
+                <Text style={styles.backButtonText}>{t.buttons.backHome}</Text>
               </TouchableOpacity>
             </View>
           );
