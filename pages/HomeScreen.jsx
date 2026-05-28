@@ -368,9 +368,12 @@ const styles = StyleSheet.create({
   optionsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignSelf: "center",
     width: "90%",
+    rowGap: 50,
+    columnGap: 40,
+    paddingTop: 120,
   },
   option: {
     backgroundColor: "rgba(30, 41, 59, 0.05)",
@@ -378,10 +381,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#fff",
-    width: "48%",
+    width: "47%",
     minHeight: 80,
     justifyContent: "center",
-    marginBottom: 12,
     boxShadow: weakGlow,
   },
   optionSelected: {
@@ -407,7 +409,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: "center",
     alignSelf: "center",
-    marginTop: 16,
+    marginTop: 120,
   },
   buttonActive: {
     boxShadow: whiteGlow,

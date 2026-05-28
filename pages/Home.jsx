@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     paddingHorizontal: 24,
+    width: 470,
   },
   centerOverlayText: {
     color: "#fff",

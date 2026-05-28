@@ -1,22 +1,18 @@
-import React, { useRef, useState, useContext, useMemo } from "react";
+import React, { useRef, useState, useContext, useMemo, useEffect } from "react";
 import {
   View,
   Text,
-  Image,
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
-  Alert,
-  PermissionsAndroid,
-  Platform,
 } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import RNFS from "react-native-fs";
 
 import { getZodiacSign } from "../zodiac";
 import { composeText } from "../Horoscope";
-import logoHeader from "../assets/logo_header.png";
+import LogoHeader from "../assets/logo_header.svg";
 import cardBackground from "../assets/home_background.png";
 import { LanguageContext } from "../LanguageContext.js";
 
@@ -76,15 +72,7 @@ const SIGN_STARS_SVG = {
   Poissons: PiscesStars,
 };
 
-const PRINT_DIR = `${RNFS.PicturesDirectoryPath}/ToPrint`;
-
-async function ensureWritePermission() {
-  if (Platform.OS !== "android" || Platform.Version >= 29) return true;
-  const granted = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-  );
-  return granted === PermissionsAndroid.RESULTS.GRANTED;
-}
+const PRINT_DIR = `${RNFS.ExternalDirectoryPath}/ToPrint`;
 
 export default function ResultScreen({ answers, signKey, picks, birthDate, onBack }) {
   const { t, language } = useContext(LanguageContext);
@@ -96,17 +84,18 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
   const { width, height } = useWindowDimensions();
   const cardRef = useRef(null);
   const [printing, setPrinting] = useState(false);
+  const [printed, setPrinted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => onBack?.(), 60 * 1000);
+    return () => clearTimeout(timer);
+  }, [onBack]);
 
   const handlePrint = async () => {
-    if (printing) return;
+    if (printing || printed) return;
     setPrinting(true);
+    setPrinted(true);
     try {
-      const ok = await ensureWritePermission();
-      if (!ok) {
-        Alert.alert(t.alerts.permissionDenied, t.alerts.cannotWriteFile);
-        return;
-      }
-
       const tmpUri = await captureRef(cardRef, {
         format: "png",
         quality: 1,
@@ -118,10 +107,8 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
 
       const destPath = `${PRINT_DIR}/horoscope_${Date.now()}.png`;
       await RNFS.moveFile(tmpUri, destPath);
-
-      Alert.alert(t.alerts.printSent, t.alerts.fileSaved);
     } catch (e) {
-      Alert.alert(t.alerts.printError, String(e?.message || e));
+      console.warn("Print failed:", e?.message || e);
     } finally {
       setPrinting(false);
     }
@@ -130,6 +117,12 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
   const cardSize = {
     width: width * 0.675,
     height: height * 0.5625,
+  };
+
+  const cardLogoWidth = cardSize.width * 0.4;
+  const cardLogoSize = {
+    width: cardLogoWidth,
+    height: cardLogoWidth * (150 / 434),
   };
 
   return (
@@ -150,10 +143,10 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
         resizeMode="cover"
       >
         <View style={styles.cardContent}>
-          <Image
-            source={logoHeader}
-            style={styles.cardLogo}
-            resizeMode="contain"
+          <LogoHeader
+            width={cardLogoSize.width}
+            height={cardLogoSize.height}
+            preserveAspectRatio="xMidYMid meet"
           />
           <View style={styles.signStarsWrap}>
             {sign && SIGN_STARS_SVG[sign.name] ? (
@@ -188,9 +181,9 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
       </ImageBackground>
 
       <TouchableOpacity
-        style={[styles.printButton, printing && styles.printButtonDisabled]}
+        style={[styles.printButton, (printing || printed) && styles.printButtonDisabled]}
         onPress={handlePrint}
-        disabled={printing}
+        disabled={printing || printed}
       >
         <Text style={styles.printButtonText}>
           {printing ? t.buttons.sending : t.buttons.print}
@@ -253,11 +246,6 @@ const styles = StyleSheet.create({
     padding: 28,
     alignItems: "center",
     justifyContent: "space-between",
-  },
-  cardLogo: {
-    height: "20%",
-    width: "100%",
-    transform: [{ scale: 3 }],
   },
   cardTextBottom: {
     width: "100%",
