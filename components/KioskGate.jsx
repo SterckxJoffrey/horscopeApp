@@ -6,36 +6,69 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { RELOCK_AFTER_UNLOCK_MS, TAP_PATTERN } from "../kioskConstants";
+import {
+  KIOSK_PASSCODE,
+  RELOCK_AFTER_UNLOCK_MS,
+  TAP_PATTERN,
+} from "../kioskConstants";
 import PasscodeModal from "./PasscodeModal.jsx";
 
 const { KioskModule } = NativeModules;
 
 export default function KioskGate({ children }) {
+  const [config, setConfig] = useState(null);
   const [locked, setLocked] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const tapsRef = useRef([]);
 
+  // While config is loading, default to locked. Once resolved, lockTaskMode=false
+  // relaxes the kiosk entirely (matches the native ConfigHolder gate).
+  const lockEnabled = config ? config.lockTaskMode : true;
+  const pincode = (config && config.unlockPincode) || KIOSK_PASSCODE;
+
+  // Pull the per-device config from native (single source of truth).
   useEffect(() => {
+    let mounted = true;
+    const result = KioskModule?.getConfig?.();
+    if (result && typeof result.then === "function") {
+      result.then((c) => mounted && setConfig(c)).catch(() => {});
+    }
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (config && !config.lockTaskMode) setLocked(false);
+  }, [config]);
+
+  useEffect(() => {
+    if (!lockEnabled) {
+      KioskModule?.showSystemBars?.();
+      return;
+    }
     if (locked) {
       KioskModule?.hideSystemBars?.();
     } else {
       KioskModule?.showSystemBars?.();
     }
-  }, [locked]);
+  }, [locked, lockEnabled]);
 
+  // Auto re-lock after the operator's unlock window expires.
   useEffect(() => {
-    if (locked) return;
+    if (!lockEnabled || locked) return;
     const timer = setTimeout(() => setLocked(true), RELOCK_AFTER_UNLOCK_MS);
     return () => clearTimeout(timer);
-  }, [locked]);
+  }, [locked, lockEnabled]);
 
+  // Re-arm the lockdown whenever the app returns to the foreground.
   useEffect(() => {
+    if (!lockEnabled) return;
     const sub = AppState.addEventListener("change", (state) => {
       if (state === "active") setLocked(true);
     });
     return () => sub.remove();
-  }, []);
+  }, [lockEnabled]);
 
   const onTapZone = () => {
     const now = Date.now();
@@ -65,14 +98,17 @@ export default function KioskGate({ children }) {
   return (
     <View style={styles.root}>
       {children}
-      <View
-        style={styles.tapZone}
-        onStartShouldSetResponder={() => true}
-        onResponderRelease={onTapZone}
-        pointerEvents="box-only"
-      />
+      {lockEnabled ? (
+        <View
+          style={styles.tapZone}
+          onStartShouldSetResponder={() => true}
+          onResponderRelease={onTapZone}
+          pointerEvents="box-only"
+        />
+      ) : null}
       <PasscodeModal
         visible={modalOpen}
+        pincode={pincode}
         onUnlock={() => {
           setModalOpen(false);
           setLocked(false);

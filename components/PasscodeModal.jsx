@@ -10,10 +10,12 @@ import {
 
 import { KIOSK_PASSCODE } from "../kioskConstants";
 
-export default function PasscodeModal({ visible, onUnlock, onCancel }) {
+export default function PasscodeModal({ visible, onUnlock, onCancel, pincode }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
   const inputRef = useRef(null);
+
+  const expected = pincode || KIOSK_PASSCODE;
 
   useEffect(() => {
     if (visible) {
@@ -25,7 +27,7 @@ export default function PasscodeModal({ visible, onUnlock, onCancel }) {
   }, [visible]);
 
   const submit = () => {
-    if (code === KIOSK_PASSCODE) {
+    if (code === expected) {
       onUnlock();
     } else {
       setError(true);
