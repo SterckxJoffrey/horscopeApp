@@ -3,6 +3,7 @@ package com.horscopeapp
 import android.app.ActivityManager
 import android.app.KeyguardManager
 import android.app.admin.DevicePolicyManager
+import android.app.role.RoleManager
 import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
@@ -10,6 +11,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
+import android.provider.Settings
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -63,6 +65,7 @@ class MainActivity : ReactActivity() {
     applyScreenOnFlags()
     registerScreenOffReceiver()
     registerSystemUiListener()
+    enableHomeAlias()
     configureDeviceOwner()
 
     if (kioskLocked) applyHide()
@@ -205,10 +208,29 @@ class MainActivity : ReactActivity() {
     return dpm.isDeviceOwnerApp(packageName)
   }
 
+  /**
+   * Enable the HOME activity-alias on every device (it ships disabled in the manifest).
+   * On device-owner devices configureDeviceOwner() additionally pins it as the sticky
+   * default. On non-owner devices this just makes the app eligible as a HOME app so an
+   * operator can select it via openHomeLauncherSettings() / the system chooser.
+   */
+  private fun enableHomeAlias() {
+    val alias = ComponentName(packageName, HOME_ALIAS)
+    try {
+      packageManager.setComponentEnabledSetting(
+        alias,
+        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+        PackageManager.DONT_KILL_APP,
+      )
+    } catch (t: Throwable) {
+      Log.w(TAG, "enableHomeAlias failed", t)
+    }
+  }
+
   private fun configureDeviceOwner() {
     val dpm = getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager ?: return
     if (!dpm.isDeviceOwnerApp(packageName)) {
-      Log.w(TAG, "App is NOT device owner. Lock task / HOME launcher / keyguard disable unavailable; using fallback pinning + immersive.")
+      Log.w(TAG, "App is NOT device owner. Lock task / sticky HOME / keyguard disable unavailable; HOME role still selectable manually via openHomeLauncherSettings().")
       return
     }
     val admin = ComponentName(this, KioskDeviceAdminReceiver::class.java)
@@ -228,20 +250,42 @@ class MainActivity : ReactActivity() {
     }
   }
 
+  /** Device-owner only: make the (already enabled) HOME alias the sticky default. */
   private fun registerAsHomeLauncher(dpm: DevicePolicyManager, admin: ComponentName) {
-    // Enable the HOME activity-alias (disabled in the manifest so non-owner dev
-    // devices don't get a "Choose Home app" chooser), then make it the sticky default.
     val alias = ComponentName(packageName, HOME_ALIAS)
-    packageManager.setComponentEnabledSetting(
-      alias,
-      PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-      PackageManager.DONT_KILL_APP,
-    )
     val filter = IntentFilter(Intent.ACTION_MAIN).apply {
       addCategory(Intent.CATEGORY_HOME)
       addCategory(Intent.CATEGORY_DEFAULT)
     }
     dpm.addPersistentPreferredActivity(admin, filter, alias)
+  }
+
+  /**
+   * Operator action (non-owner devices): ask the OS to make this app the HOME launcher.
+   * On Android 12+ this shows the one-tap "set as default Home" dialog via RoleManager;
+   * otherwise it falls back to the system Default-Home settings screen. Must be invoked
+   * from the operator's *unlocked* path — startActivity is blocked under lock task.
+   */
+  fun openHomeLauncherSettings() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+      val rm = getSystemService(Context.ROLE_SERVICE) as? RoleManager
+      if (rm != null && rm.isRoleAvailable(RoleManager.ROLE_HOME)) {
+        if (rm.isRoleHeld(RoleManager.ROLE_HOME)) return // already the Home app; nothing to do
+        try {
+          startActivity(rm.createRequestRoleIntent(RoleManager.ROLE_HOME))
+          return
+        } catch (t: Throwable) {
+          Log.w(TAG, "requestRole(HOME) failed; falling back to Home settings", t)
+        }
+      }
+    }
+    try {
+      startActivity(
+        Intent(Settings.ACTION_HOME_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+      )
+    } catch (t: Throwable) {
+      Log.w(TAG, "openHomeLauncherSettings failed", t)
+    }
   }
 
   // --- Layer 6: optional root hard-kill --------------------------------------------

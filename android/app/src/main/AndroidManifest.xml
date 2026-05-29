@@ -29,10 +29,11 @@
       </activity>
 
       <!--
-        HOME launcher role. Disabled by default so non-device-owner devices do NOT get
-        a "Choose Home app" chooser. MainActivity.registerAsHomeLauncher() enables this
-        and makes it the persistent preferred HOME activity only when the app is device
-        owner. targetActivity routes it to MainActivity.
+        HOME launcher role. Ships disabled; MainActivity.enableHomeAlias() turns it on at
+        runtime on every device so the app is selectable as the default Home app. On a
+        device-owner device registerAsHomeLauncher() additionally pins it as the sticky
+        persistent HOME activity; on non-owner devices the operator selects it manually
+        (system chooser, or KioskModule.setAsHomeLauncher()). targetActivity -> MainActivity.
       -->
       <activity-alias
         android:name=".HomeActivityAlias"

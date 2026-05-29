@@ -54,6 +54,18 @@ export default function KioskGate({ children }) {
     }
   }, [locked, lockEnabled]);
 
+  // Once per session, after the operator unlocks on a non-device-owner device, ask the
+  // OS to make this app the Home launcher (owner devices pin it automatically). Deferred
+  // so the unlock's stopLockTask() runs first — startActivity is blocked under lock task.
+  const homePromptedRef = useRef(false);
+  useEffect(() => {
+    if (!lockEnabled || locked || homePromptedRef.current) return;
+    if (!config || config.deviceOwner) return;
+    homePromptedRef.current = true;
+    const timer = setTimeout(() => KioskModule?.setAsHomeLauncher?.(), 600);
+    return () => clearTimeout(timer);
+  }, [locked, lockEnabled, config]);
+
   // Auto re-lock after the operator's unlock window expires.
   useEffect(() => {
     if (!lockEnabled || locked) return;

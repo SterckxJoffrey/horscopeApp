@@ -1,5 +1,7 @@
 package com.horscopeapp
 
+import android.app.admin.DevicePolicyManager
+import android.content.Context
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -39,9 +41,27 @@ class KioskModule(private val reactContext: ReactApplicationContext) :
       putBoolean("lockTaskMode", ConfigHolder.lockTaskMode)
       putBoolean("allowScreenOff", ConfigHolder.allowScreenOff)
       putBoolean("requireRoot", ConfigHolder.requireRoot)
+      putBoolean("launchOnBoot", ConfigHolder.launchOnBoot)
       putString("unlockPincode", ConfigHolder.unlockPincode)
+      putBoolean("deviceOwner", isDeviceOwner())
     }
     promise.resolve(map)
+  }
+
+  private fun isDeviceOwner(): Boolean {
+    val dpm = reactContext.getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager
+    return dpm?.isDeviceOwnerApp(reactContext.packageName) == true
+  }
+
+  /**
+   * Operator action for non-device-owner devices: open the system "Default Home app"
+   * picker so the operator can set this app as the HOME launcher. On device-owner
+   * devices the HOME role is already pinned automatically and this is unnecessary.
+   */
+  @ReactMethod
+  fun setAsHomeLauncher() {
+    val activity = reactContext.currentActivity as? MainActivity ?: return
+    activity.runOnUiThread { activity.openHomeLauncherSettings() }
   }
 
   @ReactMethod

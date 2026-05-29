@@ -19,6 +19,11 @@ class BootReceiver : BroadcastReceiver() {
     ) {
       return
     }
+    ConfigHolder.init(context.applicationContext)
+    if (!ConfigHolder.launchOnBoot) {
+      Log.i("Kiosk", "Boot completed but launchOnBoot is disabled; not relaunching")
+      return
+    }
     Log.i("Kiosk", "Boot completed, relaunching MainActivity")
     val launch = Intent(context, MainActivity::class.java).apply {
       addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
