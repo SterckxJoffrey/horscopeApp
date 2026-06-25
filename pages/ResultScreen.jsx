@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
+  Animated,
+  Easing,
 } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import RNFS from "react-native-fs";
@@ -85,16 +87,50 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
   const cardRef = useRef(null);
   const [printing, setPrinting] = useState(false);
   const [printed, setPrinted] = useState(false);
+  // Attention-grabbing overlay shown for a fixed duration after tapping print.
+  // Kept separate from `printing` (the real file save is near-instant).
+  const [showPrintAnim, setShowPrintAnim] = useState(false);
+  const spinValue = useRef(new Animated.Value(0)).current;
+  const animTimerRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => onBack?.(), 60 * 1000);
     return () => clearTimeout(timer);
   }, [onBack]);
 
+  // Spin loop driven on the native thread so it stays smooth while JS is busy
+  // capturing the card and moving the file.
+  useEffect(() => {
+    if (!showPrintAnim) return;
+    spinValue.setValue(0);
+    const loop = Animated.loop(
+      Animated.timing(spinValue, {
+        toValue: 1,
+        duration: 900,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      })
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [showPrintAnim, spinValue]);
+
+  useEffect(() => () => clearTimeout(animTimerRef.current), []);
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
   const handlePrint = async () => {
     if (printing || printed) return;
     setPrinting(true);
     setPrinted(true);
+    setShowPrintAnim(true);
+    // Hold the animation for a comfortable ~5s regardless of how fast the
+    // file save completes.
+    clearTimeout(animTimerRef.current);
+    animTimerRef.current = setTimeout(() => setShowPrintAnim(false), 5000);
     try {
       const tmpUri = await captureRef(cardRef, {
         format: "png",
@@ -179,6 +215,19 @@ export default function ResultScreen({ answers, signKey, picks, birthDate, onBac
           </View>
         </View>
       </ImageBackground>
+
+      {/* Sibling of the card (NOT inside cardRef) so it is never captured into
+          the printed PNG. Absolutely positioned to sit over the card. */}
+      {showPrintAnim ? (
+        <View style={styles.printOverlayWrap} pointerEvents="auto">
+          <View style={[styles.printOverlay, cardSize]}>
+            <Animated.View
+              style={[styles.spinner, { transform: [{ rotate: spin }] }]}
+            />
+            <Text style={styles.printOverlayText}>{t.buttons.sending}</Text>
+          </View>
+        </View>
+      ) : null}
 
       <TouchableOpacity
         style={[styles.printButton, (printing || printed) && styles.printButtonDisabled]}
@@ -266,6 +315,40 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     lineHeight: 28,
     textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.6)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  printOverlayWrap: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 20,
+  },
+  printOverlay: {
+    // Match the card's vertical offset so the overlay sits over the card.
+    marginBottom: "8%",
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(15, 23, 42, 0.78)",
+    borderWidth: 2,
+    borderColor: "rgba(255, 255, 255, 0.6)",
+  },
+  spinner: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 5,
+    borderColor: "rgba(255, 255, 255, 0.25)",
+    borderTopColor: "#fff",
+    marginBottom: 20,
+  },
+  printOverlayText: {
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: "700",
+    letterSpacing: 0.5,
     textShadowColor: "rgba(0, 0, 0, 0.6)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 4,

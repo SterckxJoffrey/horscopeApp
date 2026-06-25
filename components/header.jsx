@@ -4,7 +4,7 @@ import { View, Image, StyleSheet, StatusBar, Platform, TouchableOpacity, Text } 
 import logo from "../assets/logo_header.png";
 import { LanguageContext } from "../LanguageContext.js";
 
-export default function Header() {
+export default function Header({ onHome }) {
   const { language, toggleLanguage } = useContext(LanguageContext);
 
   return (
@@ -15,6 +15,16 @@ export default function Header() {
         resizeMode="contain"
         pointerEvents="none"
       />
+      {onHome ? (
+        <TouchableOpacity
+          style={styles.homeButton}
+          onPress={onHome}
+          activeOpacity={0.7}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={styles.homeButtonText}>‹ ⌂</Text>
+        </TouchableOpacity>
+      ) : null}
       <TouchableOpacity
         style={styles.languageButton}
         onPress={toggleLanguage}
@@ -44,6 +54,24 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     transform: [{ scale: 3 }],
+  },
+  homeButton: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#fff",
+    zIndex: 10,
+    elevation: 10,
+  },
+  homeButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
   },
   languageButton: {
     position: "absolute",

@@ -50,7 +50,7 @@ export default function App() {
           resizeMode="cover"
         >
           <View style={styles.overlay} pointerEvents="none" />
-          <Header />
+          <Header onHome={started ? goHome : null} />
           {!started ? (
             <Home onStart={() => setStarted(true)} />
           ) : submission === null ? (
